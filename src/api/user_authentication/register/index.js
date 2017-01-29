@@ -1,6 +1,6 @@
 'use strict';
 
-import { signup } from './controller';
+import { signUp } from './controller';
 import router from 'koa-router';
 
 class RegisterRouter extends router {
@@ -13,7 +13,7 @@ class RegisterRouter extends router {
   }
 
   configure() {
-    this.post('/', signup);
+    this.post('/', signUp);
   }
 }
 

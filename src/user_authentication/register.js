@@ -1,10 +1,10 @@
 'use strict';
 
 import bcrypt from 'bcrypt';
-import Configuration from './configuration';
+import Configurator from './configuration';
 import _ from 'lodash';
 
-class Registerer extends Configuration {
+class Registerer extends Configurator {
 
   constructor() {
     super();
@@ -12,12 +12,19 @@ class Registerer extends Configuration {
   }
 
   async register() {
+    this.validateEmail();
     const hashedPassword = await this.hashPassword();
-    return this.userStorage.create(_.extend(this.additionalAttributes, { email: this.email, password: hashedPassword }))
-      .then(function(user) {
-        user.password = undefined;
-        return user;
-      });
+    return this.userStorage.create(this.mergeExtraAttributes(hashedPassword))
+      .then(this.deletePassword);
+  }
+
+  mergeExtraAttributes(hashedPassword) {
+    return _.extend(this.additionalAttributes, { email: this.email, password: hashedPassword, username: this.username });
+  }
+
+  deletePassword(user) {
+    user.password = undefined;
+    return user;
   }
 
   async hashPassword() {

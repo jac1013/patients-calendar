@@ -5,7 +5,8 @@ import Login from '../../../src/user_authentication/login';
 import MockUserStorage from './user_storage_mock';
 
 const email = 'mock@email.com';
-const password = '12345678';
+const password = '123456Ab';
+const username = 'username';
 
 function configureLogin() {
   return new Login()
@@ -23,6 +24,11 @@ describe('Login', () => {
   it('Can set Email', () => {
     login.setEmail(email);
     expect(login.email).to.be(email);
+  });
+
+  it('Can set username', () => {
+    login.setUsername(username);
+    expect(login.username).to.be(username);
   });
 
   it('Can set Password', () => {

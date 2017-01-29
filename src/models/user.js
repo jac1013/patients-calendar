@@ -20,6 +20,7 @@ class User {
     return {
       name: String,
       lastName: String,
+      username: String,
       email: { type: String, required: true },
       password: {type: String, required: true}
     }

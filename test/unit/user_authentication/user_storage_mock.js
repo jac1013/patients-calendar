@@ -4,7 +4,7 @@ import UserStorage from '../../../src/user_authentication/contracts';
 import bcrypt from 'bcrypt';
 
 const email = 'mock@email.com';
-const password = '12345678';
+const password = '123456Ab';
 const id = 1;
 
 class MockUserStorage extends UserStorage {

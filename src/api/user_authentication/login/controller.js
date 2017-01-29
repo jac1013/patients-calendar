@@ -9,6 +9,7 @@ export async function login(ctx) {
     ctx.body = await new Login()
       .setEmail(ctx.body.email)
       .setPassword(ctx.body.password)
+      .setUsername(ctx.body.username)
       .setUserStorage(new MongoUserStorage())
       .authenticate();
   } catch(error) {

@@ -5,9 +5,11 @@ import Registerer from '../../../src/user_authentication/register';
 import MockUserStorage from './user_storage_mock';
 
 const email = 'mock@email.com';
-const password = '12345678';
+const password = '123456Ab';
 const id = 1;
 const name = { name: 'john' };
+const username = 'username';
+
 
 
 function configureRegister() {
@@ -31,6 +33,11 @@ describe('Registerer', () => {
   it('Can set Password', () => {
     register.setPassword(password);
     expect(register.password).to.be(password);
+  });
+
+  it('Can set username', () => {
+    register.setUsername(username);
+    expect(register.username).to.be(username);
   });
 
   it('Can set Additional attributes', () => {

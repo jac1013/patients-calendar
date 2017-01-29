@@ -1,10 +1,10 @@
 'use strict';
 
 import bcrypt from 'bcrypt';
-import Configuration from './configuration';
+import Configurator from './configuration';
 
-class Login extends Configuration {
-  WRONG_EMAIL_OR_PASSWORD = 'Wrong email address or password.';
+class Login extends Configurator {
+  WRONG_EMAIL_OR_PASSWORD = 'Wrong Credentials, verify them and try again.';
   user;
 
   constructor() {
@@ -13,12 +13,15 @@ class Login extends Configuration {
   }
 
   async authenticate() {
-    this.user = await this.userStorage.findOne({email: this.email});
+    this.user = await this.findByEmailOrUsername();
     this.isUserNotFound();
     await this.isPasswordIncorrect();
     this.user.password = undefined;
     return this.user;
+  }
 
+  async findByEmailOrUsername() {
+    return await this.userStorage.findOne({email: this.email, username: this.username});
   }
 
   isUserNotFound() {

@@ -2,6 +2,7 @@
 
 import UserStorage from '../../user_authentication/contracts';
 import User from '../../models/user';
+import _ from 'lodash';
 
 /**
  * This is an example of an implementation with MongoDB.
@@ -9,7 +10,15 @@ import User from '../../models/user';
  */
 class MongoUserStorage extends UserStorage {
   findOne(criteria) {
-    return User.findOne(criteria);
+    return User.findOne({$or: this.transformArgumentsForOrOperator(criteria)});
+  }
+
+  transformArgumentsForOrOperator(criteria) {
+    return _.map(criteria, (value, key) => {
+      let object = {};
+      object[key] = value;
+      return object;
+    })
   }
 
   create(attributes) {
