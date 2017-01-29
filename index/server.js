@@ -38,6 +38,8 @@ var _koaBodyparser2 = _interopRequireDefault(_koaBodyparser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('babel-runtime/core-js/promise').default = _bluebird2.default;
+
 var app = new _koa2.default();
 app.port = _config2.default.port;
 
