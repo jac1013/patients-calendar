@@ -24,26 +24,14 @@ var _jwt = require('./config/jwt');
 
 var _jwt2 = _interopRequireDefault(_jwt);
 
-var _mongoose = require('mongoose');
+var _database = require('./config/database');
 
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
-var _koaBodyparser = require('koa-bodyparser');
-
-var _koaBodyparser2 = _interopRequireDefault(_koaBodyparser);
+var _database2 = _interopRequireDefault(_database);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require('babel-runtime/core-js/promise').default = _bluebird2.default;
-
 var app = new _koa2.default();
 app.port = _config2.default.port;
-
-app.use((0, _koaBodyparser2.default)());
 
 // app.use((ctx) => {
 //   const body = JSON.stringify(ctx.request.body);
@@ -53,9 +41,7 @@ app.use((0, _koaBodyparser2.default)());
 
 (0, _koa4.default)(app);
 (0, _routes2.default)(app);
+(0, _database2.default)();
 (0, _jwt2.default)(app);
-
-_mongoose2.default.Promise = _bluebird2.default;
-_mongoose2.default.connect('mongodb://jac:10131013j@ds131729.mlab.com:31729/patients_calendar');
 
 exports.default = app;
