@@ -1,14 +1,15 @@
-'use strict';
-
 import bcrypt from 'bcrypt';
 import Configurator from './configuration';
 
-class Login extends Configurator {
+class Login {
   WRONG_EMAIL_OR_PASSWORD = 'Wrong Credentials, verify them and try again.';
   user;
+  email;
+  username;
+  password;
 
   constructor() {
-    super();
+    Object.assign(this, new Configurator());
     this.hashLibrary = bcrypt;
   }
 

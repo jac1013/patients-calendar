@@ -1,5 +1,3 @@
-'use strict';
-
 import { login } from './controller';
 import router from 'koa-router';
 

@@ -1,5 +1,3 @@
-'use strict';
-
 import request from 'supertest';
 import app from '../../src/server';
 import config from '../../src/config';

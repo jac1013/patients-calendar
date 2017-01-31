@@ -1,5 +1,3 @@
-'use strict';
-
 import { list } from './root.model';
 
 export async function index(ctx, next) {

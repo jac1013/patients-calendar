@@ -1,5 +1,3 @@
-'use strict';
-
 import expect from 'expect.js';
 import UserStorage from '../../../src/user_authentication/contracts';
 

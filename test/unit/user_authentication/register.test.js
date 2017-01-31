@@ -1,5 +1,3 @@
-'use strict';
-
 import expect from 'expect.js';
 import Registerer from '../../../src/user_authentication/register';
 import MockUserStorage from './user_storage_mock';
@@ -9,7 +7,6 @@ const password = '123456Ab';
 const id = 1;
 const name = { name: 'john' };
 const username = 'username';
-
 
 
 function configureRegister() {

@@ -1,5 +1,3 @@
-'use strict';
-
 import config from './index';
 import morgan from 'koa-morgan';
 import parser from 'koa-bodyparser';

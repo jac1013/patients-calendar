@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-var schema = mongoose.Schema;
-var model = mongoose.model.bind(mongoose);
+const schema = mongoose.Schema;
+const model = mongoose.model.bind(mongoose);
 
 class User {
   COLLECTION_NAME = 'User';

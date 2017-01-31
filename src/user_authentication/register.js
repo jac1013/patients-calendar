@@ -1,13 +1,13 @@
-'use strict';
-
 import bcrypt from 'bcrypt';
 import Configurator from './configuration';
-import _ from 'lodash';
 
-class Registerer extends Configurator {
+class Registerer {
+  email;
+  username;
+  password;
 
   constructor() {
-    super();
+    Object.assign(this, new Configurator());
     this.hashLibrary = bcrypt;
   }
 
@@ -19,7 +19,7 @@ class Registerer extends Configurator {
   }
 
   mergeExtraAttributes(hashedPassword) {
-    return _.extend(this.additionalAttributes, { email: this.email, password: hashedPassword, username: this.username });
+    return Object.assign(this.additionalAttributes, { email: this.email, password: hashedPassword, username: this.username });
   }
 
   deletePassword(user) {

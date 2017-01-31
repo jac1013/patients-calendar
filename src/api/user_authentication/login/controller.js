@@ -1,5 +1,3 @@
-'use strict';
-
 import Login from '../../../user_authentication/login'
 import MongoUserStorage from '../mongo_user_storage';
 import httpStatus from 'http-status-codes';

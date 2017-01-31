@@ -1,5 +1,3 @@
-'use strict';
-
 import mount from 'koa-mount';
 import { root } from '../api';
 import loginRouter from '../api/user_authentication/login';

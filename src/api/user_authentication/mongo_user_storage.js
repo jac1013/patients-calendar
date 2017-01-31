@@ -1,5 +1,3 @@
-'use strict';
-
 import UserStorage from '../../user_authentication/contracts';
 import User from '../../models/user';
 import _ from 'lodash';

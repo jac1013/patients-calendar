@@ -1,5 +1,3 @@
-'use strict';
-
 import Registerer from '../../../user_authentication/register';
 import MongoUserStorage from '../mongo_user_storage';
 import httpStatus from 'http-status-codes';

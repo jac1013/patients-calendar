@@ -1,11 +1,21 @@
-'use strict';
-
 class Configurator {
   email;
   password;
   userStorage;
   additionalAttributes = {};
   username;
+
+  constructor() {
+    return {
+      setEmail: this.setEmail,
+      validateEmail: this.validateEmail,
+      setPassword: this.setPassword,
+      validatePassword: this.validatePassword,
+      setUserStorage: this.setUserStorage,
+      setAdditionalAttributes: this.setAdditionalAttributes,
+      setUsername: this.setUsername
+    }
+  }
 
   setEmail(email) {
     this.email = email;
