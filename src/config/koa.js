@@ -3,18 +3,42 @@ import morgan from 'koa-morgan';
 import parser from 'koa-bodyparser';
 import compress from 'koa-compress';
 
-export default function configKoa(app) {
-  app.use(compress());
-  app.use(parser({
-    strict: false
-  }));
+class KoaConfigurator {
+  app;
+  constructor(app) {
+    this.app = app;
+    this.app.port = config.port;
+    this.compression();
+    this.bodyParser();
+    this.aliasForRequestBody();
+    this.standardErrorLogger();
+    this.httpRequestsLogger();
+  }
 
-  app.use((ctx, next) => {
-    ctx.body = ctx.request.body;
-    return next();
-  });
+  compression() {
+    this.app.use(compress());
+  }
 
-  app.on('error', err => console.error(err));
+  bodyParser() {
+    this.app.use(parser({
+      strict: false
+    }));
+  }
 
-  app.use(morgan(config.logType));
+  aliasForRequestBody() {
+    this.app.use(async(ctx, next) => {
+      ctx.body = ctx.request.body;
+      await next();
+    });
+  }
+
+  standardErrorLogger() {
+    this.app.on('error', err => console.error(err))
+  }
+
+  httpRequestsLogger() {
+    this.app.use(morgan(config.logType));
+  }
 }
+
+export default KoaConfigurator;

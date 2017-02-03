@@ -2,7 +2,7 @@ import { login } from './controller';
 import router from 'koa-router';
 
 class LoginRouter extends router {
-  URL = '/authorize';
+  URL = '/login';
 
   constructor() {
     super();
