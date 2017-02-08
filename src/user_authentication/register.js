@@ -30,6 +30,10 @@ class Registerer {
   async hashPassword() {
     return this.hashLibrary.hash(this.password, 5);
   }
+
+  static isRegisterException(exception) {
+    return Configurator.isRegisterException(exception);
+  }
 }
 
 export default Registerer;

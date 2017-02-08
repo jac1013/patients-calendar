@@ -11,10 +11,17 @@ export async function login(ctx) {
       .setUsername(ctx.body.username)
       .setUserStorage(new MongoUserStorage())
       .authenticate();
-    ctx.body = {token: createToken(user)};
+    ctx.body = { token: createToken(user) };
 
-  } catch(error) {
-    ctx.throw(httpStatus.UNAUTHORIZED, error.message);
+  } catch (error) {
+    checkForLoginExceptions(ctx, error);
+    ctx.throw(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong in the server.');
   }
 
+}
+
+function checkForLoginExceptions(context, error) {
+  if (Login.isLoginException(error)) {
+    context.throw(httpStatus.UNAUTHORIZED, error.message);
+  }
 }

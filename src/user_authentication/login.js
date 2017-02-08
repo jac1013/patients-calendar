@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import Configurator from './configuration';
 
 class Login {
-  WRONG_EMAIL_OR_PASSWORD = 'Wrong Credentials, verify them and try again.';
   user;
   email;
   username;
@@ -32,7 +31,7 @@ class Login {
   }
 
   throwWrongCredentials() {
-    throw {message: this.WRONG_EMAIL_OR_PASSWORD};
+    throw new UnauthorizedException();
   }
 
   async isPasswordIncorrect() {
@@ -40,6 +39,19 @@ class Login {
     if(!isPasswordCorrect) {
       this.throwWrongCredentials();
     }
+  }
+
+  static isLoginException(exception) {
+    return exception instanceof UnauthorizedException;
+  }
+}
+
+class UnauthorizedException {
+  WRONG_EMAIL_OR_PASSWORD = 'Wrong Credentials, verify them and try again.';
+  message;
+
+  constructor() {
+    this.message = this.WRONG_EMAIL_OR_PASSWORD;
   }
 }
 
