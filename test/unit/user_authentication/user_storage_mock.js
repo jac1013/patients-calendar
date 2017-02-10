@@ -13,7 +13,6 @@ class MockUserStorage extends UserStorage {
       bcrypt.hash(password, 5).then(function(hashedPassword) {
         fulfill({ email: email, password: hashedPassword });
       })
-
     })
   }
 

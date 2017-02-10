@@ -12,10 +12,16 @@ class Registerer {
   }
 
   async register() {
-    this.validateEmail();
+    this.checkUserStorageToBeSet();
+    await this.validateEmail();
+    await this.validateUsername();
     const hashedPassword = await this.hashPassword();
     return this.userStorage.create(this.mergeExtraAttributes(hashedPassword))
       .then(this.deletePassword);
+  }
+
+  async hashPassword() {
+    return this.hashLibrary.hash(this.password, 5);
   }
 
   mergeExtraAttributes(hashedPassword) {
@@ -25,10 +31,6 @@ class Registerer {
   deletePassword(user) {
     user.password = undefined;
     return user;
-  }
-
-  async hashPassword() {
-    return this.hashLibrary.hash(this.password, 5);
   }
 
   static isRegisterException(exception) {
