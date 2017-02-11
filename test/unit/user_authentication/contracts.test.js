@@ -1,5 +1,5 @@
 import expect from 'expect.js';
-import UserStorage from '../../../src/user_authentication/contracts';
+import UserStorage from '../../../src/user_authentication/user_storage_contract';
 
 
 describe('User Storage Contract', () => {
@@ -11,6 +11,5 @@ describe('User Storage Contract', () => {
 
   it('Must have a function called create', () => {
     expect(userStorage.create).to.be.a(Function);
-
   });
 });

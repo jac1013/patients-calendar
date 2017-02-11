@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import Configurator from './configuration';
+import Configurator from './configurator';
 
 class Registerer {
   email;
@@ -12,12 +12,36 @@ class Registerer {
   }
 
   async register() {
-    this.checkUserStorageToBeSet();
-    await this.validateEmail();
-    await this.validateUsername();
+    await this.checkDuplicatedEmail();
+    await this.checkDuplicatedUsername();
     const hashedPassword = await this.hashPassword();
     return this.userStorage.create(this.mergeExtraAttributes(hashedPassword))
       .then(this.deletePassword);
+  }
+
+  async checkDuplicatedEmail() {
+    let user = await this.findUser({ email: this.email });
+    if (user) {
+      throw new EmailAlreadyExistException();
+    }
+  }
+
+  async findUser(criteria) {
+    this.checkUserStorageToBeSet();
+    return await this.userStorage.findOne(criteria);
+  }
+
+  checkUserStorageToBeSet() {
+    if (!this.userStorage) {
+      throw new UserStorageNotConfigureException();
+    }
+  }
+
+  async checkDuplicatedUsername() {
+    let user = await this.findUser({ username: this.username });
+    if (user) {
+      throw new UsernameAlreadyExistException();
+    }
   }
 
   async hashPassword() {
@@ -25,7 +49,11 @@ class Registerer {
   }
 
   mergeExtraAttributes(hashedPassword) {
-    return Object.assign(this.additionalAttributes, { email: this.email, password: hashedPassword, username: this.username });
+    return Object.assign(this.additionalAttributes, {
+      email: this.email,
+      password: hashedPassword,
+      username: this.username
+    });
   }
 
   deletePassword(user) {
@@ -34,8 +62,22 @@ class Registerer {
   }
 
   static isRegisterException(exception) {
-    return Configurator.isRegisterException(exception);
+    return Configurator.isConfiguratorException(exception) || exception instanceof EmailAlreadyExistException
+      || exception instanceof UsernameAlreadyExistException
+      || exception instanceof UserStorageNotConfigureException;
   }
+}
+
+class EmailAlreadyExistException {
+  message = 'The email is already chosen.';
+}
+
+class UsernameAlreadyExistException {
+  message = 'The username is already chosen.';
+}
+
+class UserStorageNotConfigureException {
+  message = 'You must set a User Storage before calling functions that require to find a user.';
 }
 
 export default Registerer;

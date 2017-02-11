@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import Configurator from './configuration';
+import Configurator from './configurator';
 
 class Login {
   user;
@@ -13,7 +13,7 @@ class Login {
   }
 
   async authenticate() {
-    this.user = await this.findByEmailOrUsername();
+    await this.findByEmailOrUsername();
     this.isUserNotFound();
     await this.isPasswordIncorrect();
     this.user.password = undefined;
@@ -21,7 +21,20 @@ class Login {
   }
 
   async findByEmailOrUsername() {
-    return await this.userStorage.findOne({email: this.email, username: this.username});
+    await this.findByEmail();
+    await this.findByUsername();
+  }
+
+  async findByEmail() {
+    if (this.email) {
+      this.user = await this.userStorage.findOne({ email: this.email });
+    }
+  }
+
+  async findByUsername() {
+    if (this.username && !this.user) {
+      this.user = await this.userStorage.findOne({ username: this.username });
+    }
   }
 
   isUserNotFound() {
@@ -36,13 +49,13 @@ class Login {
 
   async isPasswordIncorrect() {
     let isPasswordCorrect = await this.hashLibrary.compare(this.password, this.user.password);
-    if(!isPasswordCorrect) {
+    if (!isPasswordCorrect) {
       this.throwWrongCredentials();
     }
   }
 
   static isLoginException(exception) {
-    return exception instanceof UnauthorizedException;
+    return exception instanceof UnauthorizedException || Configurator.isConfiguratorException(exception);
   }
 }
 

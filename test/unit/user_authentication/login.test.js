@@ -13,38 +13,57 @@ function configureLogin() {
     .setUserStorage(new MockUserStorage())
 }
 
-describe('Login', () => {
+describe('Login Success cases', () => {
   let login;
   before(() => {
     login = new Login();
   });
 
-  it('Can set Email', () => {
-    login.setEmail(email);
-    expect(login.email).to.be(email);
-  });
-
-  it('Can set username', () => {
-    login.setUsername(username);
-    expect(login.username).to.be(username);
-  });
-
-  it('Can set Password', () => {
-    login.setPassword(password);
-    expect(login.password).to.be(password);
-  });
-
-  it('Can set User Storage', () => {
-    let mock = new MockUserStorage();
-    login.setUserStorage(mock);
-    expect(login.userStorage).to.eql(mock);
-  });
-
-  it('Must authenticate a user if credentials are correct', () => {
-    let loginConfiguration = configureLogin();
-    loginConfiguration.authenticate().then(function(result) {
+  it('Can find a user by email', (done) => {
+    let login = configureLogin();
+    login.findByEmail().then((result) => {
       expect(result.email).to.be(email);
+      done();
+    }).catch(() => {
+      done();
+    });
+  });
 
+  it('Can find a user by username', (done) => {
+    let login = configureLogin();
+    login.email = undefined;
+    login.setUsername('username');
+    login.findByEmail().then((result) => {
+      expect(result.email).to.be(email);
+      done();
+    }).catch(() => {
+      done();
+    });
+  });
+
+  it('Must authenticate a user if credentials are correct', (done) => {
+    let login = configureLogin();
+    login.authenticate().then((result) => {
+      expect(result.email).to.be(email);
+      done();
+    }).catch(() => {
+      done();
+    });
+  });
+});
+
+describe('Login Failure cases', () => {
+  let login;
+  before(() => {
+    login = new Login();
+  });
+
+  it('Must throw a UnauthorizedException when the given credentials are wrong. ', (done) => {
+    let login = configureLogin();
+    login.setPassword('wrongPassword1');
+    login.authenticate().catch((e) => {
+      expect(Login.isLoginException(e)).to.be(true);
+      done();
     });
   });
 });

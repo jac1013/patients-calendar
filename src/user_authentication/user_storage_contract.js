@@ -12,8 +12,11 @@ class UserStorage {
    * this criteria depending on your needs.
    * @param criteria
    */
-  findOne(criteria) {}
-  create(attributes) {}
+  findOne(criteria) {
+  }
+
+  create(attributes) {
+  }
 }
 
 export default UserStorage;
