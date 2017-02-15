@@ -1,4 +1,4 @@
-import UserStorage from '../../user_authentication/user_storage_contract';
+import { UserStorage } from 'authentify';
 import User from '../../models/user';
 
 /**

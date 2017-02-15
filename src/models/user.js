@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 const model = mongoose.model.bind(mongoose);
 
 class User {
   COLLECTION_NAME = 'User';
 
   constructor(schemaGenerator, modelGenerator) {
-    this.schemaGenerator = schemaGenerator;
+    this.SchemaGenerator = schemaGenerator;
     this.modelGenerator = modelGenerator;
     return this.generate();
   }
 
   generate() {
-    const schema = new this.schemaGenerator(this.getSchema());
+    const schema = new this.SchemaGenerator(this.getSchema());
     return this.modelGenerator(this.COLLECTION_NAME, schema);
   }
 
@@ -22,10 +22,10 @@ class User {
       lastName: String,
       username: String,
       email: { type: String, required: true },
-      password: {type: String, required: true}
-    }
+      password: { type: String, required: true }
+    };
   }
 }
 
-const UserModel = new User(schema, model);
+const UserModel = new User(Schema, model);
 export default UserModel;

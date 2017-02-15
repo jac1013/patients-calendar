@@ -13,4 +13,4 @@ function configureDB() {
   mongoose.connect(config.URL);
 }
 
-export {config as default, configureDB};
+export { config as default, configureDB };

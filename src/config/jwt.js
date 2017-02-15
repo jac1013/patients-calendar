@@ -1,5 +1,5 @@
-import koaJWT from 'koa-jwt'
-import secret from './secret'
+import koaJWT from 'koa-jwt';
+import secret from './secret';
 
 const JWT_EXCEPTION_RULES = ['/', '/login', '/register'];
 

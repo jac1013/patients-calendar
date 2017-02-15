@@ -1,4 +1,4 @@
-import Registerer from '../../../user_authentication/register';
+import { Registerer } from 'authentify';
 import MongoUserStorage from '../mongo_user_storage';
 import httpStatus from 'http-status-codes';
 
@@ -16,7 +16,6 @@ export async function signUp(ctx, next) {
     checkForRegisterException(ctx, error);
     ctx.throw(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong in the server.');
   }
-
 }
 
 function checkForRegisterException(context, error) {

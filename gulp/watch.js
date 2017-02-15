@@ -8,8 +8,8 @@ gulp.task('watch', () => {
   nodemon({
     script: 'index.js',
     ext: 'js'
-  }).on('restart', () =>{
-    gulp.start('babel-compile')
+  }).on('restart', () => {
+    gulp.start(['babel-compile', 'lint'])
       .src('app.js')
       .pipe(livereload())
       .pipe(notify('Reloading page, please wait...'));

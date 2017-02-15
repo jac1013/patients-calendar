@@ -33,7 +33,7 @@ class KoaConfigurator {
   }
 
   standardErrorLogger() {
-    this.app.on('error', err => console.error(err))
+    this.app.on('error', err => console.error(err));
   }
 
   httpRequestsLogger() {
@@ -41,4 +41,6 @@ class KoaConfigurator {
   }
 }
 
-export default KoaConfigurator;
+export default function configureKoa(app) {
+  return new KoaConfigurator(app);
+}
